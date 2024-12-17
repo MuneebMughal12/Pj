@@ -28,13 +28,13 @@ const AllEvents = () => {
       minWidth: 100,
       flex: 0.6,
     },
-    {
-      field: "Stock",
-      headerName: "Stock",
-      type: "number",
-      minWidth: 80,
-      flex: 0.5,
-    },
+    // {
+    //   field: "Stock",
+    //   headerName: "Stock",
+    //   type: "number",
+    //   minWidth: 80,
+    //   flex: 0.5,
+    // },
 
     {
       field: "sold",
@@ -71,8 +71,8 @@ const AllEvents = () => {
       row.push({
         id: item._id,
         name: item.name,
-        price: "Rs. " + item.discountPrice,
-        Stock: item.stock,
+        price: item.discountPrice,
+        // Stock: item.stock,
         sold: item.sold_out,
       });
     });

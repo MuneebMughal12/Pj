@@ -194,6 +194,78 @@ export const categoriesData = [
     title: "Properties",
     subTitle: "",
     image_Url:
+      "https://cdn2.iconfinder.com/data/icons/real-estate-60/300/23-512.png",
+  },
+  {
+    id: 2,
+    title: "Rent",
+    subTitle: "",
+    image_Url:
+      "https://tse2.mm.bing.net/th?id=OIP.bV0q2MGMxiVBMSaJ4fya2wHaHa&pid=Api&P=0&h=220"
+  },
+  // {
+  //   id: 3,
+  //   title: "Calculator",
+  //   subTitle: "",
+  //   image_Url:
+  //     "https://tse1.mm.bing.net/th?id=OIP.oeIBsmqL77KbRwCwMRvdrwHaKn&pid=Api&P=0&h=220",
+  // },
+  // {
+  //   id: 4,
+  //   title: "Mandalas",
+  //   subTitle: "",
+  //   image_Url:
+  //     "https://thumbs.dreamstime.com/z/black-floral-flower-icon-white-design-reminiscent-woodblock-prints-showcases-elements-islamic-calligraphy-arabesque-301097673.jpg",
+  // },
+  // {
+  //   id: 5,
+  //   title: "Fabric Products",
+  //   subTitle: "",
+  //   image_Url:
+  //     "https://static.thenounproject.com/png/3961069-200.png",
+  // },
+  // {
+  //   id: 6,
+  //   title: "Home Decor",
+  //   subTitle: "",
+  //   image_Url:
+  //     "https://i.pinimg.com/originals/85/20/d7/8520d751447e4f9681a9020773f21840.jpg",
+  // },
+  // {
+  //   id: 7,
+  //   title: "Art Supplies",
+  //   subTitle: "",
+  //   image_Url: "https://cdn1.vectorstock.com/i/1000x1000/17/35/artist-supplies-line-icon-concept-sign-outline-vector-29611735.jpg",
+  // },
+  // {
+  //   id: 8,
+  //   title: "Sculptures",
+  //   subTitle: "",
+  //   image_Url:
+  //     "https://t4.ftcdn.net/jpg/01/73/33/43/360_F_173334308_4bXlv6y5voEpnfOApoZWLn3o3EAE45uz.jpg",
+  // },
+  // {
+  //   id: 9,
+  //   title: "Sketches",
+  //   subTitle: "",
+  //   image_Url:
+  //     "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ac754111769999.560fcfae5dcd5.jpg",
+  // },
+  {
+    id: 9,
+    title: "Make Your Own",
+    subTitle: "",
+    image_Url:
+      "https://static.vecteezy.com/system/resources/thumbnails/023/233/339/small/settings-icon-customize-illustration-sign-mechanical-symbol-vector.jpg",
+  },
+];
+// BuildingCata
+export const BuildingCata = [
+  {
+    id: 1,
+    title: "Home",
+    subTitle: "",
+    image_Url:
       "https://static.vecteezy.com/system/resources/previews/007/247/384/original/painting-icon-style-vector.jpg",
   },
   {
@@ -205,48 +277,48 @@ export const categoriesData = [
   },
   {
     id: 3,
-    title: "Calligraphy",
+    title: "Wood",
     subTitle: "",
     image_Url:
       "https://cdn-icons-png.flaticon.com/512/2928/2928649.png",
   },
   {
     id: 4,
-    title: "Mandalas",
+    title: "Stone",
     subTitle: "",
     image_Url:
       "https://thumbs.dreamstime.com/z/black-floral-flower-icon-white-design-reminiscent-woodblock-prints-showcases-elements-islamic-calligraphy-arabesque-301097673.jpg",
   },
   {
     id: 5,
-    title: "Fabric Products",
+    title: "Products",
     subTitle: "",
     image_Url:
       "https://static.thenounproject.com/png/3961069-200.png",
   },
   {
     id: 6,
-    title: "Home Decor",
+    title: "Home",
     subTitle: "",
     image_Url:
       "https://i.pinimg.com/originals/85/20/d7/8520d751447e4f9681a9020773f21840.jpg",
   },
   {
     id: 7,
-    title: "Art Supplies",
+    title: "Supplies",
     subTitle: "",
     image_Url: "https://cdn1.vectorstock.com/i/1000x1000/17/35/artist-supplies-line-icon-concept-sign-outline-vector-29611735.jpg",
   },
   {
     id: 8,
-    title: "Sculptures",
+    title: "color",
     subTitle: "",
     image_Url:
       "https://t4.ftcdn.net/jpg/01/73/33/43/360_F_173334308_4bXlv6y5voEpnfOApoZWLn3o3EAE45uz.jpg",
   },
   {
     id: 9,
-    title: "Sketches",
+    title: "Platstic",
     subTitle: "",
     image_Url:
       "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/ac754111769999.560fcfae5dcd5.jpg",
@@ -286,11 +358,11 @@ export const productData = [
       },
       ratings: 4.2,
     },
-    price: 1099,
+    // price: 1099,
     discount_price: 1049,
     rating: 4,
     total_sell: 35,
-    stock: 10,
+    // stock: 10,
   },
   {
     id: 2,
@@ -319,7 +391,7 @@ export const productData = [
     discount_price: 1099,
     rating: 5,
     total_sell: 80,
-    stock: 10,
+    // stock: 10,
     category:"Mobile & Tablets"
   },
   {
@@ -346,11 +418,11 @@ export const productData = [
       },
       ratings: 4.2,
     },
-    price: 1099,
+    // price: 1099,
     discount_price: 1049,
     rating: 4,
     total_sell: 75,
-    stock: 10,
+    // stock: 10,
     category:"Computers & Laptop"
   },
   {
@@ -378,11 +450,11 @@ export const productData = [
       ratings: 4.2,
     category:"Others"
     },
-    price: 100,
+    // price: 100,
     discount_price: 79,
     rating: 4,
     total_sell: 12,
-    stock: 10,
+    // stock: 10,
   },
   {
     id: 5,
@@ -408,11 +480,11 @@ export const productData = [
       },
       ratings: 4.2,
     },
-    price: 120,
+    // price: 120,
     discount_price: 89,
     rating: 5,
     total_sell: 49,
-    stock: 10,
+    // stock: 10,
     category:"Shoes"
   },
   {
@@ -438,7 +510,7 @@ export const productData = [
       },
       ratings: 4.2,
     },
-    price: 300,
+    // price: 300,
     discount_price: 239,
     rating: 4.5,
     reviews: [
@@ -451,7 +523,7 @@ export const productData = [
       },
     ],
     total_sell: 20,
-    stock: 10,
+    // stock: 10,
     category:"Music and Gaming"
   },
   {
@@ -477,11 +549,11 @@ export const productData = [
       },
       ratings: 4.2,
     },
-    price: 100,
+    // price: 100,
     discount_price: 79,
     rating: 4,
     total_sell: 62,
-    stock: 10,
+    // stock: 10,
   },
   {
     id: 1,
@@ -519,7 +591,7 @@ export const productData = [
       },
     ],
     total_sell: 20,
-    stock: 10,
+    // stock: 10,
   },
   {
     id: 2,
@@ -548,7 +620,7 @@ export const productData = [
     discount_price: 1099,
     rating: 5,
     total_sell: 20,
-    stock: 10,
+    // stock: 10,
   },
   {
     id: 1,
@@ -587,7 +659,7 @@ export const productData = [
       },
     ],
     total_sell: 20,
-    stock: 10,
+    // stock: 10,
   },
 ];
 

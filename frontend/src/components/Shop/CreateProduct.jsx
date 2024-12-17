@@ -17,9 +17,9 @@ const CreateProduct = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
-  const [originalPrice, setOriginalPrice] = useState();
+  // const [originalPrice, setOriginalPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
-  const [stock, setStock] = useState();
+  // const [stock, setStock] = useState();
 
   useEffect(() => {
     if (error) {
@@ -61,9 +61,9 @@ const CreateProduct = () => {
     newForm.append("description", description);
     newForm.append("category", category);
     newForm.append("tags", tags);
-    newForm.append("originalPrice", originalPrice);
+    // newForm.append("originalPrice", originalPrice);
     newForm.append("discountPrice", discountPrice);
-    newForm.append("stock", stock);
+    // newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
     dispatch(
       createProduct({
@@ -71,9 +71,9 @@ const CreateProduct = () => {
         description,
         category,
         tags,
-        originalPrice,
+        // originalPrice,
         discountPrice,
-        stock,
+        // stock,
         shopId: seller._id,
         images,
       })
@@ -148,7 +148,7 @@ const CreateProduct = () => {
           /> */}
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">Original Price</label>
           <input
             type="number"
@@ -158,11 +158,13 @@ const CreateProduct = () => {
             onChange={(e) => setOriginalPrice(e.target.value)}
             placeholder="Enter your product price..."
           />
-        </div>
+        </div> */}
         <br />
         <div>
           <label className="pb-2">
-            Price (With Discount) <span className="text-red-500">*</span>
+            Price 
+            {/* (With Discount) */}
+             <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -170,11 +172,11 @@ const CreateProduct = () => {
             value={discountPrice}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={(e) => setDiscountPrice(e.target.value)}
-            placeholder="Enter your product price with discount..."
+            placeholder="Enter your price..."
           />
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">
             Product Stock <span className="text-red-500">*</span>
           </label>
@@ -186,7 +188,7 @@ const CreateProduct = () => {
             onChange={(e) => setStock(e.target.value)}
             placeholder="Enter your product stock..."
           />
-        </div>
+        </div> */}
         <br />
         <div>
           <label className="pb-2">

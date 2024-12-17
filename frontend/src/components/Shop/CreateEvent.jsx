@@ -19,7 +19,7 @@ const CreateEvent = () => {
   const [tags, setTags] = useState("");
   const [originalPrice, setOriginalPrice] = useState();
   const [discountPrice, setDiscountPrice] = useState();
-  const [stock, setStock] = useState();
+  // const [stock, setStock] = useState();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -89,7 +89,7 @@ const CreateEvent = () => {
       category,
       originalPrice,
       discountPrice,
-      stock,
+      // stock,
       images,
       shopId: seller._id,
       start_Date: startDate?.toISOString(),
@@ -155,15 +155,15 @@ const CreateEvent = () => {
         </div>
         <br />
         <div>
-          {/* <label className="pb-2"></label> */}
-          {/* <input
+          <label className="pb-2"></label>
+          <input
             type="text"
             name="tags"
             value={tags}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={(e) => setTags(e.target.value)}
             placeholder="Enter your event product tags..."
-          /> */}
+          />
         </div>
         <br />
         <div>
@@ -180,7 +180,9 @@ const CreateEvent = () => {
         <br />
         <div>
           <label className="pb-2">
-            Price (With Discount) <span className="text-red-500">*</span>
+            Price 
+            {/* (With Discount) */}
+             <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -192,7 +194,7 @@ const CreateEvent = () => {
           />
         </div>
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">
             Product Stock <span className="text-red-500">*</span>
           </label>
@@ -204,9 +206,9 @@ const CreateEvent = () => {
             onChange={(e) => setStock(e.target.value)}
             placeholder="Enter your event product stock..."
           />
-        </div>
+        </div> */}
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">
             Event Start Date <span className="text-red-500">*</span>
           </label>
@@ -220,9 +222,9 @@ const CreateEvent = () => {
             min={today}
             placeholder="Enter your event product stock..."
           />
-        </div>
+        </div> */}
         <br />
-        <div>
+        {/* <div>
           <label className="pb-2">
             Event End Date <span className="text-red-500">*</span>
           </label>
@@ -236,7 +238,7 @@ const CreateEvent = () => {
             min={minEndDate}
             placeholder="Enter your event product stock..."
           />
-        </div>
+        </div> */}
         <br />
         <div>
           <label className="pb-2">

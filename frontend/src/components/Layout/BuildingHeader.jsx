@@ -1,35 +1,37 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/styles";
-import { categoriesData, productData } from "../../static/data";
+import { BuildingCata } from "../../static/data";
 import {
   AiOutlineHeart,
   AiOutlineSearch,
-  // AiOutlineShoppingCart,
+  AiOutlineShoppingCart,
 } from "react-icons/ai";
+
 import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { BiMenuAltLeft } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import DropDown from "./DropDown";
+// import BuildingDropdown from "./BuildingDropdown";
+import BuildingDropdown from "./BuildingDropdown";
 import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
-// import Cart from "../cart/Cart";
+import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
 import { RxCross1 } from "react-icons/rx";
 import logo from "D:/PjGroup/frontend/src/Assests/logo.png"
 
 
-const Header = ({ activeHeading }) => {
+const BuildingHeader = ({ activeHeading }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
-  // const { cart } = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
   const { allProducts } = useSelector((state) => state.products);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
-  const [dropDown, setDropDown] = useState(false);
-  // const [openCart, setOpenCart] = useState(false);
+  const [BuildingDropdown, setBuildingDropdown] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -119,23 +121,24 @@ const Header = ({ activeHeading }) => {
           className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
         >
           {/* categories */}
-          <div onClick={() => setDropDown(!dropDown)}>
+          <div onClick={() => setBuildingDropdown(!BuildingDropdown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
               <BiMenuAltLeft size={30} className="absolute top-3 left-2" />
               <button
                 className={`h-[100%] w-full flex justify-between items-center pl-10 bg-white font-sans text-lg font-[500] select-none rounded-t-md`}
               >
                 All
+                
               </button>
               <IoIosArrowDown
                 size={20}
                 className="absolute right-2 top-4 cursor-pointer"
-                onClick={() => setDropDown(!dropDown)}
+                onClick={() => setBuildingDropdown(!BuildingDropdown)}
               />
-              {dropDown ? (
-                <DropDown
-                  categoriesData={categoriesData}
-                  setDropDown={setDropDown}
+              {BuildingDropdown ? (
+                <BuildingDropdown
+                BuildingCata={BuildingCata}
+                  setBuildingDropdown={setBuildingDropdown}
                 />
               ) : null}
             </div>
@@ -157,7 +160,7 @@ const Header = ({ activeHeading }) => {
                 </span>
               </div>
             </div>
-{/* 
+
             <div className={`${styles.noramlFlex}`}>
               <div
                 className="relative cursor-pointer mr-[15px]"
@@ -171,7 +174,7 @@ const Header = ({ activeHeading }) => {
                   {cart && cart.length}
                 </span>
               </div>
-            </div> */}
+            </div>
 
             <div className={`${styles.noramlFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
@@ -192,7 +195,7 @@ const Header = ({ activeHeading }) => {
             </div>
 
             {/* cart popup */}
-            {/* {openCart ? <Cart setOpenCart={setOpenCart} /> : null} */}
+            {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
 
             {/* wishlist popup */}
             {openWishlist ? (
@@ -226,7 +229,7 @@ const Header = ({ activeHeading }) => {
               />
             </Link>
           </div>
-          {/* <div>
+          <div>
             <div
               className="relative mr-[20px]"
               onClick={() => setOpenCart(true)}
@@ -236,9 +239,9 @@ const Header = ({ activeHeading }) => {
                 {cart && cart.length}
               </span>
             </div>
-          </div> */}
+          </div>
           {/* cart popup */}
-          {/* {openCart ? <Cart setOpenCart={setOpenCart} /> : null} */}
+          {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
 
           {/* wishlist popup */}
           {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
@@ -348,4 +351,4 @@ const Header = ({ activeHeading }) => {
   );
 };
 
-export default Header;
+export default BuildingHeader;

@@ -16,13 +16,13 @@ import {
   removeFromWishlist,
 } from "../../../redux/actions/wishlist";
 import { useEffect } from "react";
-import { addTocart } from "../../../redux/actions/cart";
+// import { addTocart } from "../../../redux/actions/cart";
 import { toast } from "react-toastify";
 import Ratings from "../../Products/Ratings";
 
 const ProductCard = ({ data,isEvent }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
-  const { cart } = useSelector((state) => state.cart);
+  // const { cart } = useSelector((state) => state.cart);
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -45,20 +45,20 @@ const ProductCard = ({ data,isEvent }) => {
     dispatch(addToWishlist(data));
   };
 
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i._id === id);
-    if (isItemExists) {
-      toast.error("Item already in cart!");
-    } else {
-      if (data.stock < 1) {
-        toast.error("Product stock limited!");
-      } else {
-        const cartData = { ...data, qty: 1 };
-        dispatch(addTocart(cartData));
-        toast.success("Item added to cart successfully!");
-      }
-    }
-  };
+  // const addToCartHandler = (id) => {
+  //   const isItemExists = cart && cart.find((i) => i._id === id);
+  //   if (isItemExists) {
+  //     toast.error("Item already in cart!");
+  //   } else {
+  //     if (data.stock < 1) {
+  //       toast.error("Product stock limited!");
+  //     } else {
+  //       const cartData = { ...data, qty: 1 };
+  //       dispatch(addTocart(cartData));
+  //       toast.success("Item added to cart successfully!");
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -86,12 +86,12 @@ const ProductCard = ({ data,isEvent }) => {
           <div className="py-2 flex items-center justify-between">
             <div className="flex">
               <h5 className={`${styles.productDiscountPrice}`}>
-              Rs.{data.originalPrice === 0
+              {data.originalPrice === 0
                   ? data.originalPrice
                   : data.discountPrice}
               </h5>
               <h4 className={`${styles.price}`}>
-                Rs.{data.originalPrice ? data.originalPrice + "" : null}
+                {data.originalPrice ? data.originalPrice + "" : null}
               </h4>
             </div>
             <span className="font-[400] text-[17px] text-[#68d284]">
@@ -126,13 +126,13 @@ const ProductCard = ({ data,isEvent }) => {
             color="#333"
             title="Quick view"
           />
-          <AiOutlineShoppingCart
+          {/* <AiOutlineShoppingCart
             size={25}
             className="cursor-pointer absolute right-2 top-24"
             onClick={() => addToCartHandler(data._id)}
             color="#444"
             title="Add to cart"
-          />
+          /> */}
           {open ? <ProductDetailsCard setOpen={setOpen} data={data} /> : null}
         </div>
       </div>

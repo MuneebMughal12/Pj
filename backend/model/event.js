@@ -28,17 +28,17 @@ const eventSchema = new mongoose.Schema({
     tags:{
         type: String,
     },
-    originalPrice:{
-        type: Number,
-    },
+    // originalPrice:{
+    //     type: Number,
+    // },
     discountPrice:{
         type: Number,
         required: [true,"Please enter your event product price!"],
     },
-    stock:{
-        type: Number,
-        required: [true,"Please enter your event product stock!"],
-    },
+    // stock:{
+    //     type: Number,
+    //     required: [true,"Please enter your event product stock!"],
+    // },
     images:[
         {
             public_id: {

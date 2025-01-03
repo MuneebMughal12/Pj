@@ -4,18 +4,21 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const sendMail = require("../utils/sendMail");
 const Shop = require("../model/shop");
+const ShopRoutes = require("./ShopRoutes");
 const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
 const cloudinary = require("cloudinary");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const ErrorHandler = require("../utils/ErrorHandler");
 const sendShopToken = require("../utils/shopToken");
 
-// create shop
+
+// routes/seller.js
 router.post(
   "/create-shop",
   catchAsyncErrors(async (req, res, next) => {
     try {
       const { email } = req.body;
+
       const sellerEmail = await Shop.findOne({ email });
       if (sellerEmail) {
         return next(new ErrorHandler("User already exists", 400));
@@ -25,35 +28,25 @@ router.post(
         folder: "avatars",
       });
 
-      const seller = {
+      // Save shop request with a Pending status
+      const shop = await Shop.create({
         name: req.body.name,
-        email: email,
+        email,
         password: req.body.password,
         avatar: {
           public_id: myCloud.public_id,
-        url: myCloud.secure_url,
+          url: myCloud.secure_url,
         },
         address: req.body.address,
         phoneNumber: req.body.phoneNumber,
         zipCode: req.body.zipCode,
-      };
+        status: "Pending", // Default status is Pending
+      });
 
-      const activationToken = createActivationToken(seller);
-      const activationUrl = `http://localhost:3000/seller/activation/${activationToken}`;
-
-      try {
-        await sendMail({
-          email: seller.email,
-          subject: "Activate your Shop",
-          message: `Hello ${seller.name}, please click on the link to activate your shop: ${activationUrl}`,
-        });
-        res.status(201).json({
-          success: true,
-          message: `please check your email:- ${seller.email} to activate your shop!`,
-        });
-      } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
-      }
+      res.status(201).json({
+        success: true,
+        message: "Your shop creation request has been submitted for approval!",
+      });
     } catch (error) {
       return next(new ErrorHandler(error.message, 400));
     }
@@ -61,52 +54,52 @@ router.post(
 );
 
 // create activation token
-const createActivationToken = (seller) => {
-  return jwt.sign(seller, process.env.ACTIVATION_SECRET, {
-    expiresIn: "5m",
-  });
-};
+// const createActivationToken = (seller) => {
+//   return jwt.sign(seller, process.env.ACTIVATION_SECRET, {
+//     expiresIn: "5m",
+//   });
+// };
 
 // activate user
-router.post(
-  "/activation",
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const { activation_token } = req.body;
+// router.post(
+//   "/activation",
+//   catchAsyncErrors(async (req, res, next) => {
+//     try {
+//       const { activation_token } = req.body;
 
-      const newSeller = jwt.verify(
-        activation_token,
-        process.env.ACTIVATION_SECRET
-      );
+//       const newSeller = jwt.verify(
+//         activation_token,
+//         process.env.ACTIVATION_SECRET
+//       );
 
-      if (!newSeller) {
-        return next(new ErrorHandler("Invalid token", 400));
-      }
-      const { name, email, password, avatar, zipCode, address, phoneNumber } =
-        newSeller;
+//       if (!newSeller) {
+//         return next(new ErrorHandler("Invalid token", 400));
+//       }
+//       const { name, email, password, avatar, zipCode, address, phoneNumber } =
+//         newSeller;
 
-      let seller = await Shop.findOne({ email });
+//       let seller = await Shop.findOne({ email });
 
-      if (seller) {
-        return next(new ErrorHandler("User already exists", 400));
-      }
+//       if (seller) {
+//         return next(new ErrorHandler("User already exists", 400));
+//       }
 
-      seller = await Shop.create({
-        name,
-        email,
-        avatar,
-        password,
-        zipCode,
-        address,
-        phoneNumber,
-      });
+//       seller = await Shop.create({
+//         name,
+//         email,
+//         avatar,
+//         password,
+//         zipCode,
+//         address,
+//         phoneNumber,
+//       });
 
-      sendShopToken(seller, 201, res);
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
+//       sendShopToken(seller, 201, res);
+//     } catch (error) {
+//       return next(new ErrorHandler(error.message, 500));
+//     }
+//   })
+// );
 
 // login shop
 router.post(
@@ -139,26 +132,32 @@ router.post(
     }
   })
 );
-
-// load shop
-router.get(
-  "/getSeller",
-  isSeller,
+router.post(
+  "/login",
   catchAsyncErrors(async (req, res, next) => {
-    try {
-      const seller = await Shop.findById(req.seller._id);
+    const { email, password } = req.body;
 
-      if (!seller) {
-        return next(new ErrorHandler("User doesn't exists", 400));
-      }
-
-      res.status(200).json({
-        success: true,
-        seller,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
+    const seller = await Shop.findOne({ email }).select("+password");
+    if (!seller) {
+      return next(new ErrorHandler("Invalid email or password", 400));
     }
+
+    if (seller.status !== "Approved") {
+      return next(
+        new ErrorHandler(
+          "Your shop is not approved yet. Please wait for admin approval.",
+          403
+        )
+      );
+    }
+
+    const isPasswordMatched = await bcrypt.compare(password, seller.password);
+    if (!isPasswordMatched) {
+      return next(new ErrorHandler("Invalid email or password", 400));
+    }
+
+    // Generate token and log in
+    sendToken(seller, 200, res);
   })
 );
 
@@ -334,30 +333,53 @@ router.put(
   })
 );
 
-// delete seller withdraw merthods --- only seller
-router.delete(
-  "/delete-withdraw-method/",
-  isSeller,
-  catchAsyncErrors(async (req, res, next) => {
-    try {
-      const seller = await Shop.findById(req.seller._id);
+// Approve or Reject Shop --- Admin Only
+// router.put(
+//   "/approve-shop/:id",
+//   isAuthenticated,
+//   isAdmin("Admin"),
+//   catchAsyncErrors(async (req, res, next) => {
+//     const { id } = req.params;
+//     const { status } = req.body;
 
-      if (!seller) {
-        return next(new ErrorHandler("Seller not found with this id", 400));
-      }
+//     const shop = await Shop.findById(id);
+//     if (!shop) {
+//       return next(new ErrorHandler("Shop not found", 404));
+//     }
 
-      seller.withdrawMethod = null;
+//     // Update the shop's status
+//     shop.status = status;
 
-      await seller.save();
+//     if (status === "Approved") {
+//       try {
+//         // Send email notification to the shop owner
+//         await sendMail({
+//           email: shop.email,
+//           subject: "Shop Approval Notification",
+//           message: `Hello ${shop.name}, your shop has been approved. You can now log in and start using your account.`,
+//         });
+//       } catch (error) {
+//         console.error("Email sending failed:", error.message);
+//         return res.status(500).json({
+//           success: false,
+//           message: "Failed to send approval email. Status updated.",
+//         });
+//       }
+//     }
 
-      res.status(201).json({
-        success: true,
-        seller,
-      });
-    } catch (error) {
-      return next(new ErrorHandler(error.message, 500));
-    }
-  })
-);
+//     await shop.save();
+
+//     res.status(200).json({
+//       success: true,
+//       message:
+//         status === "Approved"
+//           ? "Shop approved successfully."
+//           : "Shop request has been rejected.",
+//     });
+//   })
+// );
+
+
+
 
 module.exports = router;

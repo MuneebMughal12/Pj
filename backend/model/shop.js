@@ -1,3 +1,5 @@
+
+
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -42,8 +44,8 @@ const shopSchema = new mongoose.Schema({
       required: true,
     },
   },
-  zipCode: {
-    type: Number,
+  City: {
+    type: String,
     required: true,
   },
   withdrawMethod: {

@@ -7,10 +7,8 @@ export const createProduct =
     name,
     description,
     category,
-    tags,
-    originalPrice,
     discountPrice,
-    stock,
+    Location,
     shopId,
     images
   ) =>
@@ -24,11 +22,9 @@ export const createProduct =
         `${server}/product/create-product`,
         name,
         description,
+        Location,
         category,
-        tags,
-        originalPrice,
         discountPrice,
-        stock,
         shopId,
         images,
       );

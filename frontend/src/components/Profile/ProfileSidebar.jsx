@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineLogin, AiOutlineMessage } from "react-icons/ai";
+import { AiOutlineFolderAdd, AiOutlineGift } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from "react-icons/hi";
 import {
@@ -148,6 +149,29 @@ const ProfileSidebar = ({ setActive, active }) => {
           </div>
         </Link>
       )}
+
+    
+      {user && user?.role === "Admin" && (
+        <Link to="/dashboard-create-product">
+          <div
+            className="flex items-center cursor-pointer w-full mb-8"
+            onClick={() => setActive(8)}
+          >
+            <AiOutlineFolderAdd
+              size={20}
+              color={active === 7 ? "red" : ""}
+            />
+            <span
+              className={`pl-3 ${
+                active === 8 ? "text-[red]" : ""
+              } 800px:block hidden`}
+            >
+              Create Product
+            </span>
+          </div>
+        </Link>
+      )}
+  
       <div
         className="single_item flex items-center cursor-pointer w-full mb-8"
         onClick={logoutHandler}

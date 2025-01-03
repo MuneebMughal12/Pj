@@ -16,10 +16,9 @@ const CreateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [tags, setTags] = useState("");
-  const [originalPrice, setOriginalPrice] = useState();
+  const [Location, setLocation] = useState("");
   const [discountPrice, setDiscountPrice] = useState();
-  const [stock, setStock] = useState();
+  const [newCategory, setNewCategory] = useState(""); // New state for the category input
 
   useEffect(() => {
     if (error) {
@@ -60,30 +59,42 @@ const CreateProduct = () => {
     newForm.append("name", name);
     newForm.append("description", description);
     newForm.append("category", category);
-    newForm.append("tags", tags);
-    newForm.append("originalPrice", originalPrice);
+    newForm.append("Location", Location);
     newForm.append("discountPrice", discountPrice);
-    newForm.append("stock", stock);
     newForm.append("shopId", seller._id);
+
     dispatch(
       createProduct({
         name,
+        Location,
         description,
         category,
-        tags,
-        originalPrice,
         discountPrice,
-        stock,
         shopId: seller._id,
         images,
       })
     );
   };
 
+  const handleAddCategory = () => {
+    if (newCategory && !categoriesData.some(cat => cat.title === newCategory)) {
+      categoriesData.push({
+        id: categoriesData.length + 1,  // Ensure unique ID for the new category
+        title: newCategory,
+        subTitle: "",
+        image_Url: "",  // You can customize this or allow the user to add an image URL
+      });
+      setCategory(newCategory);  // Automatically select the newly added category
+      setNewCategory("");  // Reset the input field
+    } else {
+      toast.error("Category already exists or is empty!");
+    }
+  };
+
   return (
-    <div className="w-[90%] 800px:w-[50%] bg-white  shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
+    <div className="w-[90%] 800px:w-[50%] bg-white shadow h-[80vh] rounded-[4px] p-3 overflow-y-scroll">
       <h5 className="text-[30px] font-Poppins text-center">Create Product</h5>
-      {/* create product form */}
+      {/* Create product form */}
       <form onSubmit={handleSubmit}>
         <br />
         <div>
@@ -97,6 +108,20 @@ const CreateProduct = () => {
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your product name..."
+          />
+        </div>
+        <br />
+        <div>
+          <label className="pb-2">
+          Location <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="Location"
+            value={Location}
+            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter your Location..."
           />
         </div>
         <br />
@@ -136,33 +161,27 @@ const CreateProduct = () => {
           </select>
         </div>
         <br />
-        <div>
-          <label className="pb-2"></label>
-          {/* <input
-            type="text"
-            name="tags"
-            value={tags}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setTags(e.target.value)}
-            placeholder="Enter your product tags..."
-          /> */}
-        </div>
-        <br />
-        <div>
-          <label className="pb-2">Original Price</label>
-          <input
-            type="number"
-            name="price"
-            value={originalPrice}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setOriginalPrice(e.target.value)}
-            placeholder="Enter your product price..."
-          />
-        </div>
-        <br />
+
+        {/* Input for adding a new category */}
         <div>
           <label className="pb-2">
-            Price (With Discount) <span className="text-red-500">*</span>
+            Add New Category <span className="text-red-500">*</span>
+          </label>
+          <div className="flex">
+            <input
+              type="text"
+              className="mt-2 w-full px-3 h-[35px] border border-gray-300 rounded-[3px] focus:outline-none"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Enter new category"
+            />
+          </div>
+        </div>
+        <br />
+
+        <div>
+          <label className="pb-2">
+            Price <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -170,24 +189,11 @@ const CreateProduct = () => {
             value={discountPrice}
             className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             onChange={(e) => setDiscountPrice(e.target.value)}
-            placeholder="Enter your product price with discount..."
+            placeholder="Enter your product price..."
           />
         </div>
         <br />
-        <div>
-          <label className="pb-2">
-            Product Stock <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="number"
-            name="price"
-            value={stock}
-            className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            onChange={(e) => setStock(e.target.value)}
-            placeholder="Enter your product stock..."
-          />
-        </div>
-        <br />
+
         <div>
           <label className="pb-2">
             Upload Images <span className="text-red-500">*</span>

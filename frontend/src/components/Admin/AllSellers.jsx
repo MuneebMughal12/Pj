@@ -30,6 +30,33 @@ const AllSellers = () => {
         dispatch(getAllSellers());
       });
   };
+  const handleApprove = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/approve-shop/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "Approved" }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error approving shop:", error);
+    }
+  };
+  
+  
+  const handleReject = async (id) => {
+    try {
+      const response = await axios.put(`/approve-shop/${id}`, {
+        status: "Rejected",
+      });
+      alert(response.data.message); // Show rejection message
+    } catch (error) {
+      console.error(error);
+      alert("Failed to reject shop.");
+    }
+  };
+  
 
   const columns = [
     { field: "id", headerName: "Seller ID", minWidth: 150, flex: 0.7 },
@@ -48,7 +75,7 @@ const AllSellers = () => {
             {params.row.status === "Pending" && (
               <Button
                 className={`${styles.button}`}
-                onClick={() => handleStatusChange(params.id, "Active")}
+                onClick={() => handleApprove(params.id, "Active")}
               >
                 Approve
               </Button>
@@ -56,7 +83,7 @@ const AllSellers = () => {
             {params.row.status !== "Blocked" && (
               <Button
                 className={`${styles.button} bg-red-500`}
-                onClick={() => handleStatusChange(params.id, "Blocked")}
+                onClick={() => handleReject(params.id, "Blocked")}
               >
                 Block
               </Button>

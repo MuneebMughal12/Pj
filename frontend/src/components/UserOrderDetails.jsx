@@ -229,9 +229,7 @@ const UserOrderDetails = () => {
           <br />
           {data?.status === "Delivered" && (
             <>
-              <div className={`${styles.button} text-white`} onClick={refundHandler}>
-                Give a Refund
-              </div>
+             
               <h4 className="pt-3 text-[20px] font-[600]">For Payment Process</h4>
               <p className="pt-3 text-[20px]">
                 For more info, please contact the seller.
